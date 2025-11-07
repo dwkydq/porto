@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block head %}
+<title>Portofolio {{ user[3] }}</title>
+{% endblock %}
+
+{% block body %}
+<div class="text-center mt-4">
+  <img src="{{ url_for('static', filename='uploads/' + user[5]) }}" alt="Foto Profil" class="rounded-circle shadow-sm" width="180">
+  <h1 class="mt-3">{{ user[3] }}</h1>
+  <p class="text-muted">{{ user[4] }}</p>
+</div>
+
+<hr>
+
+<section class="mt-5">
+  <h2 class="mb-4 text-primary text-center d-flex justify-content-center align-items-center">
+    <img src="{{ url_for('static', filename='icons/skill.svg') }}" width="32" class="me-2">
+    SKILLS
+  </h2>
+  <div class="row justify-content-center">
+    {% for skill in skills %}
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="card border-0 shadow-sm text-center p-3">
+          <div class="card-body">
+            {% if skill[3] %}
+              <img src="{{ url_for('static', filename='icons/' + skill[3]) }}" width="48" class="mb-3" alt="{{ skill[1] }} Icon">
+            {% else %}
+              <img src="{{ url_for('static', filename='icons/default.svg') }}" width="48" class="mb-3" alt="Default Icon">
+            {% endif %}
+
+            <h5 class="card-title fw-bold">{{ skill[1] }}</h5>
+            <p class="card-text text-muted">{{ skill[2] }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="mt-5">
+  <h2 class="mb-4 text-success text-center d-flex justify-content-center align-items-center">
+    <img src="{{ url_for('static', filename='icons/project.svg') }}" width="32" class="me-2">
+    PROJECTS
+  </h2>
+  <div class="row">
+    {% for project in projects %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0">
+          {% if project[3] %}
+            <img src="{{ url_for('static', filename='uploads/' + project[3]) }}" class="card-img-top" alt="{{ project[1] }}">
+          {% else %}
+            <img src="{{ url_for('static', filename='icons/project.svg') }}" class="card-img-top" alt="Default Project Image">
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ project[1] }}</h5>
+            <p class="card-text">{{ project[2] }}</p>
+            {% if project[4] %}
+              <a href="{{ project[4] }}" class="btn btn-outline-success btn-sm" target="_blank">
+                <img src="{{ url_for('static', filename='icons/download.svg') }}" width="18">
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="text-center mt-5">
+  <a href="{{ url_for('login') }}" class="btn btn-dark">🔐 Mode Admin</a>
+</div>
+{% endblock %}

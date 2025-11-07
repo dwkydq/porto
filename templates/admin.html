@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+{% block head %}
+<title>Dashboard Admin</title>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h2>Halo, {{ user[3] }}</h2>
+      <p class="text-muted">{{ user[4] }}</p>
+    </div>
+    <div class="text-end">
+      <img src="{{ url_for('static', filename='uploads/' + user[5]) }}" class="rounded-circle shadow-sm" width="100">
+      <div class="mt-2 d-flex justify-content-end gap-2">
+        <a href="{{ url_for('edit_profile') }}" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+          <img src="{{ url_for('static', filename='icons/edit.svg') }}" width="18">
+        </a>
+        <a href="{{ url_for('logout') }}" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1">
+          <img src="{{ url_for('static', filename='icons/log-out.svg') }}" width="18">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+<!-- SKILLS -->
+<h3 class="text-primary d-flex align-items-center">
+  <img src="{{ url_for('static', filename='icons/skill.svg') }}" width="28" class="me-2">
+  SKILLS
+  <button class="btn btn-sm btn-success ms-2" onclick="toggleAddForm('skill', event)">+ Tambah</button>
+</h3>
+
+<!-- Daftar skill -->
+<div class="row">
+  {% for s in skills %}
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          {% if s[3] %}
+            <img src="{{ url_for('static', filename='icons/' + s[3]) }}" width="48" class="mb-2" alt="{{ s[1] }}">
+          {% endif %}
+          <h5>{{ s[1] }}</h5>
+          <p class="text-muted">Level: {{ s[2] }}</p>
+
+          <div class="d-flex justify-content-center gap-2">
+            <button class="btn btn-sm btn-warning" onclick="showEditForm('skill', '{{ s[0] }}')">Edit</button>
+            <a href="{{ url_for('delete_skill', id=s[0]) }}" class="btn btn-sm btn-outline-danger">Hapus</a>
+          </div>
+
+          <!-- Form edit skill -->
+          <form method="POST" action="{{ url_for('update_skill', id=s[0]) }}" class="hidden mt-3" id="edit-skill-{{ s[0] }}">
+            <input type="text" name="name" class="form-control mb-2" value="{{ s[1] }}" required>
+            <input type="text" name="level" class="form-control mb-2" value="{{ s[2] }}" required>
+            <input type="text" name="icon" class="form-control mb-2" value="{{ s[3] }}" placeholder="Nama ikon (misal: python.svg)">
+            <button type="submit" class="btn btn-sm btn-primary w-100">Simpan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Form tambah skill -->
+<form method="POST" action="{{ url_for('add_skill') }}" class="hidden card card-body shadow-sm mb-4" id="add-skill-form">
+  <h5>Tambah Skill Baru</h5>
+  <input type="text" name="name" class="form-control mb-2" placeholder="Nama Skill (contoh: Python)" required>
+  <input type="text" name="level" class="form-control mb-2" placeholder="Level (contoh: Advanced)" required>
+  <input type="text" name="icon" class="form-control mb-3" placeholder="Nama file ikon (misal: python.svg)">
+  <button type="submit" class="btn btn-success w-100">Tambah Skill</button>
+</form>
+
+
+  <hr>
+
+  <!-- PROJECTS -->
+  <h3 class="text-success d-flex align-items-center">
+    <img src="{{ url_for('static', filename='icons/project.svg') }}" width="28" class="me-2">
+    PROJECTS
+    <button class="btn btn-sm btn-success ms-2" onclick="toggleAddForm('project')">+ Tambah</button>
+  </h3>
+
+  <div class="row">
+    {% for p in projects %}
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0">
+          {% if p[3] %}
+            <img src="{{ url_for('static', filename='uploads/' + p[3]) }}" class="card-img-top" alt="{{ p[1] }}">
+          {% endif %}
+          <div class="card-body">
+            <h5>{{ p[1] }}</h5>
+            <p>{{ p[2] }}</p>
+
+            <div class="d-flex gap-2">
+              {% if p[4] %}
+                <a href="{{ p[4] }}" target="_blank" class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center">
+                  <img src="{{ url_for('static', filename='icons/download.svg') }}" width="18">
+                </a>
+              {% endif %}
+              <button class="btn btn-sm btn-warning" onclick="showEditForm('project', '{{ p[0] }}')">Edit</button>
+              <a href="{{ url_for('delete_project', id=p[0]) }}" class="btn btn-sm btn-outline-danger">Hapus</a>
+            </div>
+
+            <form method="POST" action="{{ url_for('update_project', id=p[0]) }}" enctype="multipart/form-data" class="hidden mt-3" id="edit-project-{{ p[0] }}">
+              <input type="text" name="title" class="form-control mb-2" value="{{ p[1] }}" required>
+              <textarea name="description" class="form-control mb-2">{{ p[2] }}</textarea>
+              <input type="text" name="link" class="form-control mb-2" value="{{ p[4] }}">
+              <input type="file" name="image" class="form-control mb-3">
+              <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Form Tambah Project -->
+  <form method="POST" action="/add_project" enctype="multipart/form-data" class="hidden card card-body shadow-sm mb-4" id="add-project-form">
+    <h5>Tambah Project Baru</h5>
+    <input type="text" name="title" placeholder="Judul" class="form-control mb-2" required>
+    <textarea name="description" placeholder="Deskripsi" class="form-control mb-2" required></textarea>
+    <input type="text" name="link" placeholder="Link Proyek" class="form-control mb-2">
+    <label>Upload Gambar:</label>
+    <input type="file" name="image" accept="image/*" class="form-control mb-2" required>
+    <button type="submit" class="btn btn-success w-100">Tambah Project</button>
+  </form>
+</div>
+
+<script>
+  function showEditForm(type, id) {
+    document.getElementById(`edit-${type}-${id}`).classList.toggle('hidden');
+  }
+
+  function toggleAddForm(type, event) {
+    const form = document.getElementById(`add-${type}-form`);
+    const button = event.target;
+
+    form.classList.toggle('hidden');
+
+    if (form.classList.contains('hidden')) {
+      button.innerText = '+ Tambah';
+      button.classList.remove('btn-danger');
+      button.classList.add('btn-success');
+    } else {
+      button.innerText = 'Tutup Form';
+      button.classList.remove('btn-success');
+      button.classList.add('btn-danger');
+    }
+  }
+</script>
+
+
+<style>
+  .hidden { display: none; }
+  .d-flex.align-items-center img {
+    vertical-align: middle;
+  }
+  .btn img {
+    vertical-align: middle;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,68 @@
+/* --- Style tambahan di luar Bootstrap --- */
+
+/* Font & warna dasar */
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Heading */
+h1, h2, h3, h4 {
+  font-weight: 600;
+}
+
+/* Card custom feel */
+.card {
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Gambar profil */
+img.rounded-circle {
+  border: 3px solid #dee2e6;
+}
+
+/* Tombol tambahan */
+.btn-primary, .btn-success, .btn-warning {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Hidden class untuk form dinamis */
+.hidden {
+  display: none !important;
+}
+
+/* Animasi halus untuk muncul/hilang form */
+form {
+  transition: all 0.3s ease;
+}
+
+/* Link kustom */
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Spasi tambahan antara elemen */
+section {
+  margin-top: 40px;
+}
+
+/* Flash message alert (opsional jika ingin custom warna) */
+.alert {
+  border-radius: 10px;
+}
