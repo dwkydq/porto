@@ -2,11 +2,39 @@ Proyek Portfolio Pribadi - Flask & MySQL Ini adalah proyek website portfolio pri
 
 Website ini memiliki dua bagian utama:
 
-Halaman Publik: Menampilkan profil, daftar skill, dan proyek. Panel Admin: Halaman dashboard yang dilindungi login untuk mengelola (CRUD) semua konten di halaman publik. Fitur Utama Halaman Publik: Menampilkan data profil, skill, dan proyek langsung dari database. Login Admin: Otentikasi admin manual menggunakan Flask Session. Manajemen Profil: Admin dapat mengubah nama, bio, dan foto profil. CRUD Proyek: Admin dapat menambah, mengedit, dan menghapus data proyek (termasuk upload gambar). CRUD Skill: Admin dapat menambah, mengedit, dan menghapus data skill (termasuk nama ikon Font Awesome). Upload Gambar: Fungsionalitas untuk meng-upload foto profil dan gambar proyek ke server. Teknologi yang Digunakan Back-end: Python, Flask Database: MySQL Driver Database: flask-mysqldb (dijalankan dengan PyMySQL untuk kompatibilitas Windows) Front-end: HTML5, Bootstrap 5, Font Awesome Templating: Jinja2
+Tampilan Publik (index.html)
+Ini adalah halaman yang dilihat oleh pengunjung.
+Header Profil: Menampilkan Foto Profil, Nama ({{ user[3] }}), dan Bio ({{ user[4] }}) dari pemilik portofolio.
+SKILLS: Bagian yang menampilkan daftar kemampuan yang dimiliki. Setiap skill memiliki Nama ({{ skill[1] }}), Level ({{ skill[2] }}), dan Ikon.
+PROJECTS: Bagian yang menampilkan karya atau proyek yang telah diselesaikan. Setiap proyek memiliki Judul ({{ project[1] }}), Deskripsi ({{ project[2] }}), Gambar ({{ project[3] }}), dan tautan Unduh/Link ({{ project[4] }}).
+Tombol Mode Admin: Tombol di bagian bawah halaman untuk masuk ke halaman login admin.
+
+🔒 Dashboard Admin (admin.html, edit_profile.html, login.html)
+Ini adalah area yang dilindungi kata sandi untuk mengelola konten website.
+1. Header Admin (admin.html)
+Menampilkan Salam ("Halo, Dwiky"), Foto Profil, dan Bio.
+Terdapat tombol untuk Edit Profil (edit_profile) dan Log Out (logout).
+2. Manajemen SKILLS (admin.html)
+Menampilkan daftar skill yang ada.
+Memiliki fungsi:
++ Tambah: Menampilkan form untuk menambah skill baru.
+Edit: Menampilkan form untuk mengubah nama, level, dan ikon skill yang sudah ada.
+Hapus: Untuk menghapus skill.
+3. Manajemen PROJECTS (admin.html)
+Menampilkan daftar proyek yang ada.
+Memiliki fungsi:
++ Tambah: Menampilkan form untuk menambah proyek baru (Judul, Deskripsi, Link, Gambar).
+Edit: Menampilkan form untuk mengubah detail proyek.
+Hapus: Untuk menghapus proyek.
+4. Edit Profil (edit_profile.html)
+Halaman khusus untuk mengubah Nama, Bio, dan Foto Profil.
+5. Login (login.html)
+Halaman untuk memasukkan Username dan Password guna mengakses Dashboard Admin.
+
 
 Cara Menjalankan Aplikasi
 
-Clone Repository git clone https://github.com/username/portfolio-flask.git cd portfolio-flask
+Clone Repository git clone https://github.com/dwky/porto-flask.git cd portfolio-flask
 
 Buat Virtual Environment dan Install Dependencies python -m venv env env\Scripts\activate # untuk Windows
 
